@@ -1,0 +1,12 @@
+Copyright (c) 2026 Renaissance Nath. All rights reserved.
+
+The source code in this repository is published so that it can be read. No licence is granted
+to copy, modify, distribute, sublicense or create derivative works of it, in whole or in part,
+or to use it to build a competing product, without prior written permission from the copyright
+holder.
+
+You may install and run the released FaultSage package to analyse your own projects, and use
+FaultSage Cloud, under the terms published at /terms on the FaultSage website.
+
+Third-party components keep their own licences (see docs/TRD.md section 2). The IBM Plex fonts
+in web/public/fonts are under the SIL Open Font License 1.1 (web/public/fonts/OFL.txt).

@@ -1,0 +1,133 @@
+{
+  "run_id": "2026-11-23_bugsinpy_dev_055449",
+  "faultsage_commit": "8bf5e7c",
+  "faultsage_version": "0.1.0",
+  "dataset": "bugsinpy",
+  "dataset_version": "git:11c5f1eea954a42132cfd06bf257766a7963e0fd",
+  "split": "dev",
+  "split_file": "src/faultsage/bench/splits/bugsinpy_v1.json",
+  "projects_run": [
+    "black",
+    "tqdm",
+    "httpie",
+    "sanic",
+    "luigi"
+  ],
+  "level": "file",
+  "seed": 7,
+  "cases_attempted": 75,
+  "cases_reproduced": 26,
+  "cases_excluded": {
+    "test_not_failing_on_buggy": 1,
+    "dependency_install_failed": 47,
+    "fixed_version_still_fails": 1
+  },
+  "metrics": {
+    "faultsage": {
+      "top1": {
+        "mean": 0.5769,
+        "ci95": [
+          0.3846,
+          0.7692
+        ]
+      },
+      "top3": {
+        "mean": 0.6538,
+        "ci95": [
+          0.4615,
+          0.8462
+        ]
+      },
+      "top5": {
+        "mean": 0.6538,
+        "ci95": [
+          0.4615,
+          0.8462
+        ]
+      }
+    },
+    "blast_radius": {
+      "precision": 0.1154,
+      "recall": 0.0769
+    },
+    "verify_correctness": 1.0
+  },
+  "baselines": {
+    "random": {
+      "top1": {
+        "mean": 0.2808,
+        "ci95": [
+          0.2154,
+          0.3442
+        ]
+      },
+      "top3": {
+        "mean": 0.6769,
+        "ci95": [
+          0.5481,
+          0.7981
+        ]
+      },
+      "top5": {
+        "mean": 0.8192,
+        "ci95": [
+          0.6923,
+          0.9269
+        ]
+      }
+    },
+    "recent": {
+      "top1": {
+        "mean": 0.7308,
+        "ci95": [
+          0.5385,
+          0.8846
+        ]
+      },
+      "top3": {
+        "mean": 0.8846,
+        "ci95": [
+          0.7692,
+          1.0
+        ]
+      },
+      "top5": {
+        "mean": 0.8846,
+        "ci95": [
+          0.7692,
+          1.0
+        ]
+      }
+    },
+    "top_frame": {
+      "top1": {
+        "mean": 0.2308,
+        "ci95": [
+          0.0769,
+          0.3846
+        ]
+      },
+      "top3": {
+        "mean": 0.2308,
+        "ci95": [
+          0.0769,
+          0.3846
+        ]
+      },
+      "top5": {
+        "mean": 0.2308,
+        "ci95": [
+          0.0769,
+          0.3846
+        ]
+      }
+    }
+  },
+  "weights_version": "untrained",
+  "weights_file_sha256": "eb5a421a60c0cff3a0c5f28af3c5909bf2b52bb1448be6c9ba575a26a4b6ffa9",
+  "machine": {
+    "cpus": 4
+  },
+  "started_at": "2026-11-23T05:54:49.504807+00:00",
+  "finished_at": "2026-11-23T06:07:11.664287+00:00"
+}

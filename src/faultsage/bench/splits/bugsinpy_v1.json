@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "decision": "D-022",
+  "method": "Split by project, hand-picked so dev and test each contain data, ML, pipeline/CLI and web code (DATASETS.md section 3, Q-002 option 2). Frozen: a new split gets a new file.",
+  "dev": ["pandas", "keras", "luigi", "black", "tqdm", "httpie", "sanic"],
+  "test": ["matplotlib", "spacy", "fastapi", "scrapy", "tornado", "thefuck", "youtube-dl", "cookiecutter", "PySnooper", "ansible"]
+}

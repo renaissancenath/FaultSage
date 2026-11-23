@@ -1,0 +1,44 @@
+# Checks your deployed site the way a new customer uses it (web/e2e/journey.mjs): sign up, sign in,
+# create a project and API key, send a real error with the SDK, push a case file with the CLI,
+# confirm another customer cannot see it, then delete the test accounts.
+# Run it from the Actions tab: live-check, Run workflow, paste your site address.
+name: live-check
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Your site address, for example https://faultsage.onrender.com"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  journey:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: "22"
+      - run: python -m pip install -e .
+      - run: cd web && npx playwright@1.49.1 install --with-deps chromium && npm i --no-save playwright@1.49.1
+      - name: Wake the site (free hosting sleeps when idle)
+        env:
+          SITE: ${{ inputs.url }}
+        run: |
+          for i in $(seq 1 20); do curl -fsS --max-time 30 "${SITE%/}/healthz" && exit 0; sleep 10; done
+          echo "The site did not answer /healthz. Check the Render logs." && exit 1
+      - name: Customer journey
+        env:
+          BASE_URL: ${{ inputs.url }}
+          OUT: test-results/live-journey
+        run: cd web && PYTHON="$(command -v python)" node e2e/journey.mjs
+      - uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        if: always()
+        with:
+          name: live-journey
+          path: web/test-results/live-journey

@@ -1,0 +1,189 @@
+.app {
+  display: grid;
+  grid-template-columns: var(--fs-nav-w) minmax(0, 1fr);
+  min-height: 100vh;
+}
+.nav {
+  border-right: var(--fs-rule-w) solid var(--fs-rule);
+  padding: var(--fs-space-5) var(--fs-space-4);
+  display: grid;
+  align-content: start;
+  gap: var(--fs-space-5);
+  background: var(--fs-paper);
+}
+.navList {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--fs-space-1);
+}
+.navLink {
+  display: block;
+  padding: var(--fs-space-2) var(--fs-space-3);
+  color: var(--fs-ink);
+  text-decoration: none;
+  border-radius: var(--fs-radius-1);
+  font-size: var(--fs-text-sm);
+}
+.navLink:hover {
+  background: var(--fs-sunken);
+  color: var(--fs-ink);
+}
+.active {
+  background: var(--fs-sunken);
+  font-weight: var(--fs-weight-medium);
+  box-shadow: var(--fs-inset-rule);
+}
+.navFoot {
+  font-size: var(--fs-text-xs);
+  color: var(--fs-ink-2);
+  display: grid;
+  gap: var(--fs-space-2);
+}
+.main {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fs-space-2) var(--fs-space-4);
+  padding: var(--fs-space-3) var(--fs-space-6);
+  border-bottom: var(--fs-rule-w) solid var(--fs-rule);
+  font-size: var(--fs-text-sm);
+  background: var(--fs-surface);
+}
+.statusActions {
+  display: flex;
+  gap: var(--fs-space-4);
+  align-items: center;
+}
+.content {
+  padding: var(--fs-space-6);
+  max-width: var(--fs-content-max);
+  width: 100%;
+  display: grid;
+  gap: var(--fs-space-6);
+  align-content: start;
+}
+.public {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fs-space-4);
+  padding: var(--fs-space-4) var(--fs-space-6);
+  border-bottom: var(--fs-rule-w) solid var(--fs-rule);
+  max-width: var(--fs-content-max);
+  width: 100%;
+  margin: 0 auto;
+}
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: var(--fs-space-5);
+  font-size: var(--fs-text-sm);
+  flex-wrap: wrap;
+}
+.topnav a:not([class]) {
+  color: var(--fs-ink);
+  text-decoration: none;
+}
+.topnav a:not([class]):hover {
+  text-decoration: underline;
+}
+.publicMain {
+  width: 100%;
+  max-width: var(--fs-content-max);
+  margin: 0 auto;
+  padding: var(--fs-space-7) var(--fs-space-6);
+  display: grid;
+  gap: var(--fs-space-8);
+  align-content: start;
+}
+.footer {
+  border-top: var(--fs-rule-w) solid var(--fs-rule);
+  padding: var(--fs-space-5) var(--fs-space-6);
+  font-size: var(--fs-text-xs);
+  color: var(--fs-ink-2);
+}
+.footerInner {
+  max-width: var(--fs-content-max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fs-space-3) var(--fs-space-5);
+  justify-content: space-between;
+}
+.footerLinks {
+  display: flex;
+  gap: var(--fs-space-4);
+  flex-wrap: wrap;
+}
+.orgLine {
+  font-size: var(--fs-text-xs);
+  color: var(--fs-ink-2);
+}
+.orgSelect {
+  width: 100%;
+  height: 32px;
+  background: var(--fs-surface);
+  border: var(--fs-rule-w) solid var(--fs-rule-strong);
+  border-radius: var(--fs-radius-1);
+  padding: 0 var(--fs-space-2);
+  font-size: var(--fs-text-sm);
+}
+.menuToggle {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+  .nav {
+    border-right: 0;
+    border-bottom: var(--fs-rule-w) solid var(--fs-rule);
+    padding: var(--fs-space-3) var(--fs-space-4);
+    grid-auto-flow: row;
+    gap: var(--fs-space-3);
+  }
+  .navList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fs-space-1);
+  }
+  .navFoot {
+    display: none;
+  }
+  .content {
+    padding: var(--fs-space-5) var(--fs-space-4);
+  }
+  .status {
+    padding: var(--fs-space-3) var(--fs-space-4);
+  }
+  .topbar {
+    padding: var(--fs-space-3) var(--fs-space-4);
+  }
+  .publicMain {
+    padding: var(--fs-space-6) var(--fs-space-4);
+    gap: var(--fs-space-7);
+  }
+}
+@media (max-width: 767px) {
+  .topnav .hideSm {
+    display: none;
+  }
+  .navLink {
+    padding: var(--fs-space-2);
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+}

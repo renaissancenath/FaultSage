@@ -1,0 +1,85 @@
+.wrap {
+  display: grid;
+  gap: var(--fs-space-2);
+}
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--fs-space-3);
+}
+.canvas {
+  height: 360px;
+  border: var(--fs-rule-w) solid var(--fs-rule);
+  background: var(--fs-surface);
+  border-radius: var(--fs-radius-0);
+}
+.legend {
+  font-size: var(--fs-text-xs);
+  color: var(--fs-ink-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fs-space-4);
+}
+.canvas :global(.react-flow__node) {
+  background: var(--fs-paper);
+  color: var(--fs-ink);
+  border: var(--fs-rule-w) solid var(--fs-ink-2);
+  border-radius: var(--fs-radius-0);
+  font-family: var(--fs-font-mono);
+  font-size: var(--fs-text-xs);
+  padding: var(--fs-space-1) var(--fs-space-2);
+  width: auto;
+  min-width: 96px;
+}
+.canvas :global(.react-flow__node.fs-on-path) {
+  border: 2px solid var(--fs-signal);
+}
+.canvas :global(.react-flow__node.fs-failed) {
+  background: var(--fs-signal-wash);
+}
+.canvas :global(.react-flow__node:focus-visible) {
+  outline: var(--fs-focus-w) solid var(--fs-focus);
+  outline-offset: 2px;
+}
+.canvas :global(.react-flow__edge-path) {
+  stroke: var(--fs-ink-2);
+  stroke-width: 1;
+}
+.canvas :global(.fs-edge-inferred .react-flow__edge-path) {
+  stroke-dasharray: 4 4;
+}
+.canvas :global(.fs-edge-path .react-flow__edge-path) {
+  stroke: var(--fs-signal);
+  stroke-width: 2;
+}
+.canvas :global(.react-flow__edge-text) {
+  fill: var(--fs-ink-2);
+  font-size: 11px;
+}
+.canvas :global(.react-flow__edge-textbg) {
+  fill: var(--fs-surface);
+}
+.canvas :global(.react-flow__controls-button) {
+  background: var(--fs-surface);
+  color: var(--fs-ink);
+  border-color: var(--fs-rule);
+}
+.canvas :global(.react-flow__controls-button svg) {
+  fill: var(--fs-ink);
+}
+.canvas :global(.react-flow__attribution) {
+  display: none;
+}
+.list {
+  list-style: none;
+  padding: 0;
+  font-family: var(--fs-font-mono);
+  font-size: var(--fs-text-xs);
+  display: grid;
+  gap: var(--fs-space-1);
+}
+.onPath {
+  color: var(--fs-ink);
+  font-weight: var(--fs-weight-medium);
+}
