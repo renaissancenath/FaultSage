@@ -1,12 +1,24 @@
+FaultSage
 Copyright (c) 2026 Renaissance Nath. All rights reserved.
 
-The source code in this repository is published so that it can be read. No licence is granted
-to copy, modify, distribute, sublicense or create derivative works of it, in whole or in part,
-or to use it to build a competing product, without prior written permission from the copyright
-holder.
+This repository is public so that people can read and evaluate the work. It is not open source.
 
-You may install and run the released FaultSage package to analyse your own projects, and use
-FaultSage Cloud, under the terms published at /terms on the FaultSage website.
+You MAY:
+  - view and read the documentation, diagrams and screenshots on GitHub;
+  - share a link to this repository.
 
-Third-party components keep their own licences (see docs/TRD.md section 2). The IBM Plex fonts
-in web/public/fonts are under the SIL Open Font License 1.1 (web/public/fonts/OFL.txt).
+You may NOT, without prior written permission from the copyright holder:
+  - copy, modify, publish, distribute, sublicense or sell the text, diagrams, screenshots,
+    design or any part of FaultSage;
+  - use the name "FaultSage", the logo or the design system in any product, service or website.
+
+GitHub's Terms of Service allow other users to view and fork public repositories on GitHub; that
+permission does not extend to any use outside GitHub.
+
+THE MATERIAL IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM IT OR ITS USE.
+
+Benchmark datasets keep their own licences. IBM Plex fonts shown in images: SIL Open Font License 1.1.
+
+For permission requests: open an issue on the repository or contact the author through their
+GitHub profile.

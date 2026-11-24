@@ -1,44 +1,36 @@
-# FaultSage: Security
+# Security: FaultSage
 
-## 1. Security model in one paragraph
+What protects users of the local tool and customers of FaultSage Cloud, and how to report a problem.
 
-FaultSage runs on the developer's own machine, reads their project with their permission, and serves a dashboard only to their own browser. The main risks are: another website or local process talking to the dashboard, untrusted text (tracebacks, logs, code) being rendered as HTML, FaultSage writing or running something it should not, secrets leaking into stored history, and untrusted benchmark code running on the host. Every rule in `docs/security/` exists to stop one of these.
+## Reporting a vulnerability
 
-## 2. Documents
+Use GitHub's private vulnerability reporting on this repository, or contact the author through their GitHub profile. Please include steps to reproduce, the affected version and the impact. Reports are acknowledged within 7 days.
 
-| File | Purpose |
+## Local tool
+
+| Risk | Protection |
 |---|---|
-| [security/01_SECURITY-RULES.md](security/01_SECURITY-RULES.md) | Rules the code must follow |
-| [security/02_LOGIN-RULES.md](security/02_LOGIN-RULES.md) | Dashboard session and future account rules |
-| [security/03_DATA-RULES.md](security/03_DATA-RULES.md) | What data is stored, where, for how long, and how it is protected |
-| [security/04_ATTACK-SURFACE-MAP.md](security/04_ATTACK-SURFACE-MAP.md) | Entry points, threats, mitigations |
-| [security/05_LAUNCH-CHECKLIST.md](security/05_LAUNCH-CHECKLIST.md) | Checks before every release |
+| Someone on the network opens the dashboard | Binds to 127.0.0.1 only; a one-time token opens it; Host and Origin are checked |
+| FaultSage changes files it should not | One module writes to a project, only after a typed confirmation, never to a file that changed since the analysis or in a dirty git tree, and always with a backup |
+| Secrets end up in a case file or an export | Tokens, keys, passwords, connection strings and data values are redacted before storage and again on export |
+| Untrusted output is rendered as HTML | Tracebacks, logs and code are rendered as text only |
+| Benchmark repositories run hostile code | They run in containers, with network access only while dependencies install |
 
-## 3. Security tooling (all free and open source)
+## Cloud
 
-| Tool | Checks | Where |
-|---|---|---|
-| Ruff `S` rules, Bandit | Python security anti-patterns | CI, pre-commit |
-| Semgrep Community Edition | Extra patterns (subprocess, path, XSS sinks) | CI |
-| pip-audit | Known vulnerable Python dependencies | CI, weekly |
-| `npm audit --omit=dev` | Known vulnerable JS dependencies | CI |
-| gitleaks | Secrets in commits | CI, pre-commit |
-| axe-core | Accessibility (also catches some unsafe markup) | Playwright |
-| Custom tests | Write gate, Host/Origin, token, path escape, no network | `tests/security/` |
+| Area | Protection |
+|---|---|
+| Passwords | Argon2id; checked against a breached-password list; lockout after repeated failures; same reply whether or not an account exists |
+| Email codes | 6 digits from a secure random source; stored as a keyed hash; valid 10 minutes and 5 tries; only the newest works; rate limited per address and per network |
+| GitHub sign-in | State checked on return; an unconfirmed account with the same email loses its password and sessions before linking (pre-account hijacking) |
+| Sessions | Random ids stored as hashes; HttpOnly, Secure, SameSite cookies; CSRF token on every change; rotated on sign-in and password change; sign out of all devices |
+| Customer isolation | Every query is scoped to the caller's workspace; the workspace comes only from the caller's memberships; a test calls every route that takes an id with another customer's ids |
+| API keys | Shown once, stored as hashes, bound to one project, revocable |
+| Data | Redacted before storage; no source code accepted (code excerpts and patches are dropped even if a client sends them); account deletion removes personal data at once |
+| Edge | Strict CSP, HSTS, no-sniff, frame denial; 2 MB request limit; rate limits keyed on the client IP added by the hosting proxy, not the spoofable one a client sends |
+| Billing | Webhooks verified by HMAC before anything changes; only subscription events change a plan; late or replayed events are ignored |
+| Database changes | Destructive migrations and restores need a typed confirmation, a named approver and a backup first, and are recorded |
 
-## 4. Supported versions
+## Checks on every change
 
-Only the latest release receives fixes.
-
-## 5. Reporting a vulnerability
-
-Use GitHub private vulnerability reporting on the repository (Security tab, "Report a vulnerability"). Do not open a public issue. Expect an acknowledgement within 7 days. Please include steps to reproduce, affected version and impact.
-
-## 6. Principles
-
-1. Local by default, no network at runtime.
-2. Least access: read only what config allows.
-3. No writes without approval; every write backed up and logged.
-4. No command execution beyond pytest node ids and commands the user wrote in config.
-5. Untrusted input is data, never markup or code.
-6. Fail closed: if a check cannot run, the action is refused.
+Bandit, Semgrep with project rules (no shell, no writes outside the apply gate, parameterised SQL), pip-audit, npm audit, gitleaks, the tenant-isolation test, session and sign-in tests, and accessibility checks on every screen.
