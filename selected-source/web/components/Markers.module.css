@@ -1,0 +1,73 @@
+.marker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fs-space-2);
+  white-space: nowrap;
+}
+.shape {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border: 2px solid var(--fs-ink);
+  border-radius: var(--fs-radius-0);
+}
+.confirmed {
+  background: var(--fs-ink);
+}
+.strongHalf {
+  position: relative;
+  overflow: hidden;
+  background: var(--fs-surface);
+}
+.strongHalf::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  background: var(--fs-ink);
+}
+.possible {
+  background: transparent;
+}
+.unknown {
+  background: transparent;
+  border-style: dashed;
+}
+.circle {
+  border-radius: 50%;
+}
+.passed {
+  background: var(--fs-ok);
+  border-color: var(--fs-ok);
+}
+.failed {
+  background: var(--fs-signal);
+  border-color: var(--fs-signal);
+}
+.notRun {
+  background: transparent;
+  border-color: var(--fs-ink-2);
+}
+.warnShape {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 12px solid var(--fs-warn);
+  border-top: 0;
+}
+.word {
+  font-size: var(--fs-text-sm);
+}
+.okWord {
+  color: var(--fs-ok);
+}
+.warnWord {
+  color: var(--fs-warn);
+}
+.failWord {
+  color: var(--fs-signal);
+}

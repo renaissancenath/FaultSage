@@ -5,6 +5,7 @@
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/renaissancenath/FaultSage?color=17181C&label=last%20commit" alt="Last commit">
   <img src="https://img.shields.io/badge/license-source--available-17181C" alt="Source-available licence">
+  <a href="https://faultsage.onrender.com"><img src="https://img.shields.io/website?url=https%3A%2F%2Ffaultsage.onrender.com%2Fhealthz&up_message=online&down_message=waking%20up&label=live%20demo&color=17181C" alt="Live demo status"></a>
   <br>
   <img src="https://img.shields.io/badge/Python_3.12-17181C?logo=python&logoColor=white" alt="Python 3.12">
   <img src="https://img.shields.io/badge/FastAPI-17181C?logo=fastapi&logoColor=white" alt="FastAPI">
@@ -22,11 +23,14 @@
 
 <p align="center">
   <b>When a test or pipeline fails, FaultSage points to the line that caused it, shows the evidence, and proves the fix by rerunning the tests.</b><br>
+  <a href="https://faultsage.onrender.com"><b>Live demo</b></a> ·
   <a href="#see-it">See it</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#architecture">Architecture</a> ·
   <a href="#inside-the-backend">Backend</a> ·
-  <a href="#measured-accuracy">Accuracy</a>
+  <a href="#measured-accuracy">Accuracy</a> ·
+  <a href="#proof">Proof</a> ·
+  <a href="#skills-and-tools">Skills</a>
 </p>
 
 <picture>
@@ -35,6 +39,10 @@
 </picture>
 
 <p align="center"><img src="docs/images/demo-animated.svg" width="900" alt="Animation of a real terminal session: pytest fails with KeyError 'transaction_amount'; faultsage show ranks clean.py line 4 as the likely cause with git, code search and import-graph evidence; faultsage apply shows the patch and asks for the typed confirmation; faultsage verify reports 2 of 2 tests pass."></p>
+
+## Try it
+
+**[faultsage.onrender.com](https://faultsage.onrender.com)**: create a free account (email and password, or a code sent by email), add a project, copy its API key, and send an error from any Python app with three lines of the SDK. The free hosting sleeps when idle, so the first visit can take about 30 seconds.
 
 ## The problem
 
@@ -148,6 +156,8 @@ Real bugs from [BugsInPy](https://github.com/soarsmu/BugsInPy). Projects are spl
 | Recently changed | 0.11 | 0.16 | 0.16 |
 | Random | 0.07 | 0.21 | 0.32 |
 
+The test set is 19 bugs, 16 of them from one project, so the 95% interval for Top-5 is 0.68 to 1.00 ([full tables](docs/RESULTS.md)).
+
 <details>
 <summary><b>How the model was chosen</b></summary>
 
@@ -155,25 +165,58 @@ Five candidate models were compared on the dev projects by leaving one project o
 
 </details>
 
-## Honest limitations
+## Proof
 
-- The test set is 19 bugs, 16 of them from one project (tornado), so the intervals are wide (Top-5 0.68 to 1.00). More test projects are the next step.
-- The first guess is about as good as pointing at the crash line (0.47 vs 0.53). FaultSage's lead is in the top 3 and top 5, where the evidence for each candidate helps a person decide.
-- The free download ranks by the stack trace alone; the trained ranker runs where the engine is installed.
-- Payments (Lemon Squeezy, signed webhooks) are built and covered by automated tests, and stay off until the legal pages are reviewed and a store is set up.
+Screenshots of real output, not mock-ups. Each one names the run it came from.
 
-## Roadmap
+### The deployed site passes the customer journey
 
-| Done | Next |
+<p align="center"><img src="docs/images/live-landing.png" width="860" alt="The FaultSage landing page on faultsage.onrender.com"></p>
+
+<img src="docs/images/proof-live.png" alt="Customer journey against https://faultsage.onrender.com on 25 November 2026: 16 of 16 steps passed, including sign-up, sign-in, project and API key creation, a real error sent with the SDK and triaged, a case file pushed from the CLI, another customer unable to see the project, and account deletion. The two email steps were skipped because they need an inbox.">
+
+### Model choice and accuracy, from the executed notebook
+
+The notebook ([results-only copy](selected-source/notebooks/ranker_results.ipynb)) was run once, top to bottom, and saved with its outputs. These are its cells as saved.
+
+**Leave-one-project-out on the dev projects** (output of cell 3):
+
+<img src="docs/images/nb-model-choice.png" alt="Notebook output: leave-one-project-out Top-1 on dev; logistic regression 0.55 per bug and 0.58 per project; gradient boosting 0.62 and 0.55; histogram gradient boosting 0.59 and 0.53; random forest 0.67 and 0.57; average of logistic and forest 0.70 and 0.63; top stack frame 0.29; recently changed 0.45">
+
+**Held-out test projects, read from the run record made after the model was frozen** (output of cell 6):
+
+<img src="docs/images/nb-heldout.png" alt="Notebook output: on 19 held-out bugs, first model 0.11, 0.37, 0.58; current model 0.47, 0.79, 0.84; top stack frame 0.53, 0.58, 0.58; recently changed 0.11, 0.16, 0.16; random 0.07, 0.21, 0.32 for Top-1, Top-3 and Top-5">
+
+<table>
+<tr>
+<td width="50%"><img src="docs/images/nb-model-choice-chart.png" alt="Notebook chart: Top-1 on the held-out dev project for each model, per bug and per project"></td>
+<td width="50%"><img src="docs/images/nb-heldout-chart.png" alt="Notebook chart: Top-1, Top-3 and Top-5 on the held-out projects for the current model, the first model and the top stack frame"></td>
+</tr>
+</table>
+
+### Tests and checks
+
+<img src="docs/images/proof-tests.png" alt="Test run on 25 November 2026: 146 Python tests passed; 46 cloud tests passed on PostgreSQL 16; 9 web tests passed">
+
+<img src="docs/images/proof-checks.png" alt="Summary of the local CI log: design and contrast checks, Ruff, mypy, pytest, Bandit, pip-audit, Semgrep, npm audit, accessibility checks on every screen, the customer journey and gitleaks all pass">
+
+## Skills and tools
+
+| Area | Used in this project |
 |---|---|
-| Local CLI, daemon and dashboard; trained ranking with evidence; blast radius; approval gate; verification | More test projects for a tighter estimate |
-| Hosted dashboard: accounts, workspaces, email-code sign-in, Free and Pro plans | Coverage contexts in benchmark runs |
-| Production error capture, triage notes, GitHub issue links | JunoBench and LogSage datasets for notebook and log failures |
-| CI with security scans and a browser journey; backups and restores behind approval | Optional two-factor sign-in |
+| **Languages** | Python 3.12, TypeScript, SQL, CSS, JavaScript, Bash |
+| **Machine learning** | scikit-learn (logistic regression, random forest, gradient boosting), feature engineering, leave-one-project-out validation, bootstrap confidence intervals, Jupyter |
+| **Program analysis** | Python AST, traceback parsing, import and pipeline graphs with NetworkX, spectrum-based fault localisation (Ochiai), git history |
+| **Backend** | FastAPI, Pydantic v2, SQLAlchemy Core, PostgreSQL, SQLite, Typer CLI, background workers |
+| **Frontend** | React 18, React Router 7, Vite, React Flow, CSS Modules on design tokens, light and dark themes, accessibility (axe-core) |
+| **Security** | Argon2id, one-time email codes, OAuth (GitHub), CSRF, CSP and HSTS, rate limiting, tenant isolation, secret redaction, HMAC-signed webhooks |
+| **Testing** | pytest, Vitest, Playwright end-to-end tests, tests on SQLite and PostgreSQL, a benchmark harness on real bugs (BugsInPy) in Docker |
+| **DevOps** | Docker, Render, Neon, GitHub Actions, Ruff, mypy, Bandit, Semgrep, pip-audit, gitleaks |
+| **Product** | Free and Pro plans with server-side limits, billing webhooks, legal pages, email notifications, backups and restores behind human approval |
 
 ## About the source code
 
-This repository is the public overview of FaultSage. The source code (analysis engine, ranker and its training notebook, CLI, cloud service, web app, tests and benchmark harness) is kept in a private repository. If you are reviewing my work for a role, open an issue or message me through my GitHub profile and I will give you read access or walk you through the code.
+This repository is the public overview of FaultSage. A few real files are in [selected-source](selected-source/) to show the languages and the code style. The rest of the source (analysis engine, trained ranker and its training notebook, CLI, cloud service, web app, tests and benchmark harness) is kept in a private repository. If you are reviewing my work for a role, open an issue or message me through my GitHub profile and I will give you read access or walk you through the code.
 
 ## Licence
 

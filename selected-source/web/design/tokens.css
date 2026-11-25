@@ -1,0 +1,128 @@
+/* FaultSage design tokens. Source of truth. Explained in docs/DESIGN_SYSTEM.md.
+   Only values from this file may be used for colour, type, spacing and radius. */
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("/fonts/IBMPlexSans-SemiBold.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/IBMPlexMono-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+
+:root {
+  /* Colour: light theme */
+  --fs-paper: #F4F2ED;
+  --fs-surface: #FBFAF7;
+  --fs-sunken: #ECE9E2;
+  --fs-ink: #16191D;
+  --fs-ink-2: #4A5058;
+  --fs-rule: #CFCAC0;
+  --fs-rule-strong: #8E8A82;
+  --fs-brand: #0B5A5C;
+  --fs-brand-hover: #08484A;
+  --fs-on-brand: #FBFAF7;
+  --fs-signal: #C2410C;       /* the one bright moment: failure path only */
+  --fs-signal-wash: #FBE3D6;
+  --fs-ok: #1F6B4A;
+  --fs-warn: #8A5A00;
+  --fs-focus: #0B5A5C;
+  --fs-overlay-shadow: 0 8px 24px rgba(22, 25, 29, 0.16); /* dialogs and menus only */
+  --fs-scrim: rgba(22, 25, 29, 0.48);        /* behind ConfirmDialog only */
+  --fs-inset-rule: inset 0 0 0 1px var(--fs-ink); /* active state: 1 px inset rule */
+
+  /* Type */
+  --fs-font-sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --fs-font-mono: "IBM Plex Mono", Consolas, ui-monospace, monospace;
+  --fs-text-xs: 13px;  --fs-leading-xs: 20px;
+  --fs-text-sm: 14px;  --fs-leading-sm: 20px;
+  --fs-text-md: 16px;  --fs-leading-md: 24px;
+  --fs-text-lg: 20px;  --fs-leading-lg: 28px;
+  --fs-text-xl: 24px;  --fs-leading-xl: 32px;
+  --fs-text-2xl: 32px; --fs-leading-2xl: 40px;
+  --fs-text-code: 13px; --fs-leading-code: 20px;
+  --fs-weight-regular: 400;
+  --fs-weight-medium: 500;
+  --fs-weight-semibold: 600;
+
+  /* Spacing: 4-point grid only */
+  --fs-space-1: 4px;
+  --fs-space-2: 8px;
+  --fs-space-3: 12px;
+  --fs-space-4: 16px;
+  --fs-space-5: 24px;
+  --fs-space-6: 32px;
+  --fs-space-7: 48px;
+  --fs-space-8: 64px;
+
+  /* Radius: nothing is a pill */
+  --fs-radius-0: 0;
+  --fs-radius-1: 2px;
+  --fs-radius-2: 4px;
+
+  /* Sizes */
+  --fs-control-h: 36px;
+  --fs-row-h: 40px;
+  --fs-row-h-compact: 32px;
+  --fs-nav-w: 220px;
+  --fs-content-max: 1280px;
+  --fs-rule-w: 1px;
+  --fs-focus-w: 2px;
+}
+
+[data-theme="dark"] {
+  --fs-paper: #121518;
+  --fs-surface: #1A1E22;
+  --fs-sunken: #0E1113;
+  --fs-ink: #ECEAE4;
+  --fs-ink-2: #B3B8BE;
+  --fs-rule: #343A40;
+  --fs-rule-strong: #6B737B;
+  --fs-brand: #5FC2BE;
+  --fs-brand-hover: #7FD3CF;
+  --fs-on-brand: #0E1113;
+  --fs-signal: #FF8A50;
+  --fs-signal-wash: #3A2016;
+  --fs-ok: #6FCF97;
+  --fs-warn: #E8B44C;
+  --fs-focus: #5FC2BE;
+  --fs-overlay-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --fs-scrim: rgba(0, 0, 0, 0.64);
+}
+
+/* Base */
+html { background: var(--fs-paper); color: var(--fs-ink); }
+body {
+  margin: 0;
+  font-family: var(--fs-font-sans);
+  font-size: var(--fs-text-md);
+  line-height: var(--fs-leading-md);
+  text-align: left;
+}
+code, pre, kbd, samp, .fs-mono {
+  font-family: var(--fs-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+:focus-visible {
+  outline: var(--fs-focus-w) solid var(--fs-focus);
+  outline-offset: 2px;
+}
+/* No motion anywhere. State changes are instant. */
+*, *::before, *::after { transition: none; animation: none; }
